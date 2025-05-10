@@ -9,7 +9,6 @@ use crate::{constants::{ANCHOR_DISCRIMINATOR, MAX_PROOF_TYPES}, error::AaaSError
 pub fn handler(
     ctx: Context<CreatePool>,
     pool_id: u64,
-    title: String,
     start_time: u64,
     end_time: u64,
     entry_fee: u16,
@@ -20,7 +19,7 @@ pub fn handler(
         accepted_proofs.len() >= MAX_PROOF_TYPES,
         AaaSErrorCode::MaxProofLimit
     );
-    require!(start_time > end_time, AaaSErrorCode::TimeOrder);
+    require!(start_time < end_time, AaaSErrorCode::TimeOrder);
 
     *ctx.accounts.pool = Pool {
         pool_id,
@@ -29,8 +28,7 @@ pub fn handler(
         entry_fee,
         accepted_proofs,
         goal,
-        title,
-        members: Vec::new(),
+        members: Vec::new()
     };
     Ok(())
 }
