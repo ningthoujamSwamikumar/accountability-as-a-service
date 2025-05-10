@@ -17,7 +17,6 @@ pub mod aaas_contract {
     pub fn create_pool(
         ctx: Context<CreatePool>,
         pool_id: u64,
-        title: String,
         start_time: u64,
         end_time: u64,
         entry_fee: u16,
@@ -27,7 +26,6 @@ pub mod aaas_contract {
         create_pool::handler(
             ctx,
             pool_id,
-            title,
             start_time,
             end_time,
             entry_fee,

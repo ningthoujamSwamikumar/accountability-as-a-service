@@ -6,8 +6,6 @@ use crate::constants::MAX_PROOF_TYPES;
 #[derive(InitSpace)]
 pub struct Pool {
     pub pool_id: u64,
-    #[max_len(50)]
-    pub title: String,
     pub start_time: u64,
     pub end_time: u64,
     pub entry_fee: u16,
