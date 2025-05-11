@@ -23,7 +23,7 @@ pub mod aaas_contract {
         accepted_proofs: Vec<String>,
         goal: String,
     ) -> Result<()> {
-        create_pool::handler(
+        create_pool_handler(
             ctx,
             pool_id,
             start_time,
@@ -32,5 +32,9 @@ pub mod aaas_contract {
             accepted_proofs,
             goal,
         )
+    }
+
+    pub fn join_pool(ctx: Context<JoinPool>, pool_id: u64) -> Result<()> {
+        join_pool_handler(ctx, pool_id)
     }
 }
