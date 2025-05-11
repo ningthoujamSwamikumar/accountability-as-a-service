@@ -8,4 +8,6 @@ pub enum AaaSErrorCode {
     TimeOrder,
     #[msg("Max member limit reached!")]
     MaxMember,
+    #[msg("Challenge already started!")]
+    ChallengeStarted,
 }

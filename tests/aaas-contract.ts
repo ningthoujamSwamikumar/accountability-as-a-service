@@ -44,4 +44,10 @@ describe("aaas-contract", () => {
     expect(pool.poolId == pool_id, "Pool id matched");
     assert(pool.members.length == 0, "No members initially");
   });
+
+  it("join pool", async ()=>{
+    //get or create a token account (preferably an ATA)
+    
+    program.methods.joinPool(pool_id).accounts({})
+  })
 });

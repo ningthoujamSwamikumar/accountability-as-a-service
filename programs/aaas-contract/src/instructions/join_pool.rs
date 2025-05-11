@@ -3,6 +3,7 @@ use anchor_spl::associated_token::AssociatedToken;
 use anchor_spl::token_interface::{
     transfer_checked, Mint, TokenAccount, TokenInterface, TransferChecked,
 };
+use chrono::Utc;
 
 use crate::error::AaaSErrorCode;
 use crate::{constants::MAX_MEMBER, Pool};
@@ -12,14 +13,18 @@ pub fn join_pool_handler(ctx: Context<JoinPool>, _pool_id: u64) -> Result<()> {
     let pool = &ctx.accounts.pool;
 
     require!(pool.members.len() == MAX_MEMBER, AaaSErrorCode::MaxMember);
+    require!(
+        pool.start_time > Utc::now().timestamp() as u64,
+        AaaSErrorCode::ChallengeStarted
+    );
 
     send_token_to_vault(
         &ctx.accounts.fee_token_account,
         &ctx.accounts.vault,
         &pool.entry_fee,
         &ctx.accounts.fee_token_mint,
-       &ctx.accounts.joiner,
-        &ctx.accounts.fee_token_program
+        &ctx.accounts.joiner,
+        &ctx.accounts.fee_token_program,
     )?;
 
     let pool = &mut ctx.accounts.pool;
