@@ -6,4 +6,6 @@ pub enum AaaSErrorCode {
     MaxProofLimit,
     #[msg("Order of time is violated!")]
     TimeOrder,
+    #[msg("Max member limit reached!")]
+    MaxMember,
 }

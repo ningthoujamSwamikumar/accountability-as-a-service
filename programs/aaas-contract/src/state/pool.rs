@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-use crate::constants::MAX_PROOF_TYPES;
+use crate::constants::{MAX_MEMBER, MAX_PROOF_TYPES};
 
 #[account]
 #[derive(InitSpace)]
@@ -13,6 +13,6 @@ pub struct Pool {
     pub accepted_proofs: Vec<String>,
     #[max_len(50)]
     pub goal: String,
-    #[max_len(20, 256)]
+    #[max_len(MAX_MEMBER, 256)]
     pub members: Vec<String>,
 }

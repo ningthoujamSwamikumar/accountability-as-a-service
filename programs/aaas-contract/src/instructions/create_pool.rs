@@ -6,7 +6,7 @@ use anchor_spl::{
 
 use crate::{constants::{ANCHOR_DISCRIMINATOR, MAX_PROOF_TYPES}, error::AaaSErrorCode, state::Pool};
 
-pub fn handler(
+pub fn create_pool_handler(
     ctx: Context<CreatePool>,
     pool_id: u64,
     start_time: u64,
