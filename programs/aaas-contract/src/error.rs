@@ -10,4 +10,12 @@ pub enum AaaSErrorCode {
     MaxMember,
     #[msg("Challenge already started!")]
     ChallengeStarted,
+    #[msg("Voting time is not reached!")]
+    EarlyVoting,
+    #[msg("Voting time is over!")]
+    LateVoting,
+    #[msg("Already voted!")]
+    OneVote,
+    #[msg("Only members can vote!")]
+    OnlyMember,
 }

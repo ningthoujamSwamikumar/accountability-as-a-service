@@ -1,11 +1,8 @@
 use anchor_lang::prelude::*;
 use anchor_spl::associated_token::AssociatedToken;
-use anchor_spl::token_interface::{
-    transfer_checked, Mint, TokenAccount, TokenInterface, TransferChecked,
-};
+use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
 
-use crate::error::AaaSErrorCode;
-use crate::{constants::MAX_MEMBER, Pool};
+use crate::{constants::MAX_MEMBER, error::AaaSErrorCode, shared, Pool};
 
 pub fn join_pool_handler(ctx: Context<JoinPool>, _pool_id: u64) -> Result<()> {
     let signer_key = ctx.accounts.joiner.key;
@@ -17,7 +14,7 @@ pub fn join_pool_handler(ctx: Context<JoinPool>, _pool_id: u64) -> Result<()> {
         AaaSErrorCode::ChallengeStarted
     );
 
-    send_token_to_vault(
+    shared::transfer_token(
         &ctx.accounts.fee_token_account,
         &ctx.accounts.vault,
         &pool.entry_fee,
@@ -30,24 +27,6 @@ pub fn join_pool_handler(ctx: Context<JoinPool>, _pool_id: u64) -> Result<()> {
     pool.members.push(signer_key.to_string());
 
     Ok(())
-}
-
-fn send_token_to_vault<'info>(
-    from: &InterfaceAccount<'info, TokenAccount>,
-    to: &InterfaceAccount<'info, TokenAccount>,
-    amount: &u16,
-    mint: &InterfaceAccount<'info, Mint>,
-    authority: &Signer<'info>,
-    token_program: &Interface<'info, TokenInterface>,
-) -> Result<()> {
-    let transfer_accounts_options = TransferChecked {
-        from: from.to_account_info(),
-        authority: authority.to_account_info(),
-        mint: mint.to_account_info(),
-        to: to.to_account_info(),
-    };
-    let cpi_context = CpiContext::new(token_program.to_account_info(), transfer_accounts_options);
-    transfer_checked(cpi_context, *amount as u64, mint.decimals)
 }
 
 #[derive(Accounts)]

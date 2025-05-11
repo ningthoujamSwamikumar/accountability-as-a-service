@@ -37,4 +37,8 @@ pub mod aaas_contract {
     pub fn join_pool(ctx: Context<JoinPool>, pool_id: u64) -> Result<()> {
         join_pool_handler(ctx, pool_id)
     }
+
+    pub fn vote_pool(ctx: Context<VotePool>, pool_id: u64, candidate: Pubkey, is_accepted: bool)->Result<()>{
+        vote_pool_handler(ctx, pool_id, candidate, is_accepted)
+    }
 }
