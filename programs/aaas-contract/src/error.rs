@@ -18,4 +18,6 @@ pub enum AaaSErrorCode {
     OneVote,
     #[msg("Only members can vote!")]
     OnlyMember,
+    #[msg("Already joined!")]
+    AlreadyMember,
 }
