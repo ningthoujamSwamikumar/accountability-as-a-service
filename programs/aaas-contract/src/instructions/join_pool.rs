@@ -13,7 +13,7 @@ pub fn join_pool_handler(ctx: Context<JoinPool>, _pool_id: u64) -> Result<()> {
         pool.start_time > Clock::get()?.unix_timestamp as u64,
         AaaSErrorCode::ChallengeStarted
     );
-    require!(pool.members.iter().any(|m| *m == signer_key.to_string()), AaaSErrorCode::AlreadyMember);
+    require!(!pool.members.iter().any(|m| *m == signer_key.to_string()), AaaSErrorCode::AlreadyMember);
 
     shared::transfer_token(
         &ctx.accounts.fee_token_account,
